@@ -6,7 +6,7 @@ public abstract class Animal extends Live implements Motion, Brain {
     private Float speed;
     private Float acceleration;
     private Float azimuth;
-    private Float verticaAngle;
+    private Float verticalAngle;
 
     private Integer neuronCount;
 
@@ -34,12 +34,12 @@ public abstract class Animal extends Live implements Motion, Brain {
         this.azimuth = azimuth;
     }
 
-    public Float getVerticaAngle() {
-        return verticaAngle;
+    public Float getVerticalAngle() {
+        return verticalAngle;
     }
 
-    public void setVerticaAngle(Float verticaAngle) {
-        this.verticaAngle = verticaAngle;
+    public void setVerticalAngle(Float verticalAngle) {
+        this.verticalAngle = verticalAngle;
     }
 
     public Integer getNeuronCount() {

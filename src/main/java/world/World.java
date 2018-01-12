@@ -3,8 +3,6 @@ package world;
 import world.live.animals.invertebrates.protozoa.tubulinida.amoebidae.amoeba.Amoeba;
 import world.util.Times;
 
-
-
 public class World {
     public static void main(String[] args) {
 
