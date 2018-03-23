@@ -3,22 +3,26 @@ package world.live;
 import java.util.Date;
 
 public abstract class Live implements Growth, Nutrition, Reproduction {
+
     private Date birthDate;
+    private Date maxAge;
     private Date age;
 
     private boolean satiety;
 
-    public Date ageIs(Date birthDate) {
-        if(birthDate != null) {
+    public Date ageIs(Date birthDate, Date maxAge) {
+        if(birthDate != null && maxAge != null) {
             Date today = new Date();
             Date age = new Date();
             age.setTime(today.getTime() - birthDate.getTime());
-            return age;
-        } else return null;
+            if (age.before(maxAge)) return age;
+            else return null;
+        }
+        else return null;
     }
 
-    public Date birthDateIs(Date age) {
-        if(age != null) {
+    public Date birthDateIs(Date age, Date maxAge) {
+        if(age != null && maxAge != null && age.before(maxAge)) {
             Date today = new Date();
             Date birthDate = new Date();
             birthDate.setTime(today.getTime() - age.getTime());
@@ -64,6 +68,14 @@ public abstract class Live implements Growth, Nutrition, Reproduction {
 
     public void setAge(Date age) {
         this.age = age;
+    }
+
+    public Date getMaxAge() {
+        return maxAge;
+    }
+
+    public void setMaxAge(Date maxAge) {
+        this.maxAge = maxAge;
     }
 
     public boolean isSatiety() {

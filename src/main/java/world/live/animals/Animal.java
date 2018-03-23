@@ -2,11 +2,13 @@ package world.live.animals;
 
 import world.live.Live;
 
-public abstract class Moving extends Live implements Motion {
+public abstract class Animal extends Live implements Motion, Brain {
     private Float speed;
     private Float acceleration;
     private Float azimuth;
     private Float verticaAngle;
+
+    private Integer neuronCount;
 
     public Float getSpeed() {
         return speed;
@@ -38,5 +40,13 @@ public abstract class Moving extends Live implements Motion {
 
     public void setVerticaAngle(Float verticaAngle) {
         this.verticaAngle = verticaAngle;
+    }
+
+    public Integer getNeuronCount() {
+        return neuronCount;
+    }
+
+    public void setNeuronCount(Integer neuronCount) {
+        this.neuronCount = neuronCount;
     }
 }
