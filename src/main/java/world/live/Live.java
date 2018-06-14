@@ -1,88 +1,69 @@
 package world.live;
 
-import java.util.Date;
+import world.Energy;
+import world.Time;
 
-public abstract class Live implements Growth, Nutrition, Reproduction {
+public abstract class Live implements Metabolism {
 
-    private Date birthDate;
-    private Date maxAge;
-    private Date age;
+    private Time time;
 
-    private boolean satiety;
+    private long birthDate;
 
-    public Date ageIs(Date birthDate, Date maxAge) {
-        if(birthDate != null && maxAge != null) {
-            Date today = new Date();
-            Date age = new Date();
-            age.setTime(today.getTime() - birthDate.getTime());
-            if (age.before(maxAge)) return age;
-            else return null;
-        }
-        else return null;
+    private long age;
+
+    private long maxAge;
+
+    private Energy energy;
+
+    public Live(Time time, long maxAge, Energy energy, final double energyPerSecond) {
+        this.time = time;
+        this.birthDate = time.getTime();
+        this.age = 0;
+        this.maxAge = maxAge;
+        this.energy = energy;
+
+        Thread liveThread = new Thread(new Runnable() {
+            public void run() {
+                live(energyPerSecond);
+            }
+        });
+        liveThread.start();
     }
 
-    public Date birthDateIs(Date age, Date maxAge) {
-        if(age != null && maxAge != null && age.before(maxAge)) {
-            Date today = new Date();
-            Date birthDate = new Date();
-            birthDate.setTime(today.getTime() - age.getTime());
-            return birthDate;
-        } else return null;
-    }
+    public void live(double energyPerSecond) {
+        while (age < maxAge && energy.getEnergy() > 0) {
+            age--;
+            energy.decreaseEnergy(energyPerSecond);
 
-    public void eat(Object food) {
-        if(food != null) {
-            if (isEat(food)) {
-
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }
 
-    public void drink(Object fluid) {
-        if(fluid != null) {
-            if (isDrink(fluid)) {
-
-            }
-        }
+    public void eat(Live food) {
+        energy.increaseEnergy(food.energy.getEnergy());
     }
 
-    public boolean isEat(Object food) {
-        return false;
+    public void drink(Live fluid) {
+        energy.increaseEnergy(fluid.energy.getEnergy());
     }
 
-    public boolean isDrink(Object fluid) {
-        return false;
+    public Energy getEnergy() {
+        return energy;
     }
 
-    public Date getBirthDate() {
-        return birthDate;
+    public long getAge() {
+        return time.getTime() - birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public Date getAge() {
-        return age;
-    }
-
-    public void setAge(Date age) {
-        this.age = age;
-    }
-
-    public Date getMaxAge() {
+    public long getMaxAge() {
         return maxAge;
     }
 
-    public void setMaxAge(Date maxAge) {
+    public void setMaxAge(long maxAge) {
         this.maxAge = maxAge;
-    }
-
-    public boolean isSatiety() {
-        return satiety;
-    }
-
-    public void setSatiety(boolean satiety) {
-        this.satiety = satiety;
     }
 }
